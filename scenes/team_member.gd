@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends RigidBody2D
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var members: Node2D = $"../../Members"
@@ -16,6 +16,7 @@ var current_target: Node2D
 
 func _ready() -> void:
 	SignalBus.team_changed.connect(_on_team_changed)
+
 
 func load_member_sprite(value: Globals.TEAMS) -> void:
 	current_team = value
@@ -39,19 +40,8 @@ func _physics_process(delta: float) -> void:
 		vel = Vector2(0, 0)
 	else:
 		vel = (current_target.position - position).normalized() * rng.randf_range(MIN_SPEED, MAX_SPEED) * delta
-	var collision = move_and_collide(vel)
-	# Check for collision with other team_members and if they are from an enemy team
-	# If they are from the enemy team, then change the team and sprite for the node
-	if collision:
-		var collider = collision.get_collider()
-		if  collider is CharacterBody2D and collider.current_team == _clamp_to_team(current_team + 1):
-			var prev_team: Globals.TEAMS = current_team
-			current_team = collision.get_collider().current_team
-			load_member_sprite(current_team)
-			_set_collision_layer(current_team)
-			current_target = null
-			SignalBus.team_changed.emit(self, prev_team)
 	
+	move_and_collide(vel)
 
 
 # Gets all members in the game and filters to only get the enemy nodes
@@ -80,6 +70,7 @@ func _find_closest_node(targets: Array[Node2D]) -> Node2D:
 		empty.position = Vector2(0, 0)
 		return empty
 
+
 func _find_random_node(targets: Array[Node2D]) -> Node2D:
 	if targets.is_empty():
 		var empty = Node2D.new()
@@ -103,6 +94,7 @@ func _clamp_to_team(team: int) -> int:
 	else:
 		return team
 
+
 func _on_team_changed(node: Node2D, prev_team: Globals.TEAMS) -> void:
 	if node != self and current_target == node:
 		current_target = null
@@ -119,3 +111,12 @@ func _set_collision_layer(team: Globals.TEAMS) -> void:
 		Globals.TEAMS.SCISSOR:
 			collision_layer = 0x4
 			collision_mask = 0x3
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if  body is RigidBody2D and body.current_team == _clamp_to_team(current_team + 1):
+		var prev_team: Globals.TEAMS = current_team
+		current_team = body.current_team
+		load_member_sprite(current_team)
+		current_target = null
+		SignalBus.team_changed.emit(self, prev_team)

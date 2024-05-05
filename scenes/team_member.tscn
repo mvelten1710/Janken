@@ -5,7 +5,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0ruh"]
 size = Vector2(25, 25)
 
-[node name="TeamMember" type="CharacterBody2D"]
+[node name="TeamMember" type="RigidBody2D"]
+gravity_scale = 0.0
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_60ref")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -13,3 +16,5 @@ shape = SubResource("RectangleShape2D_n0ruh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.065, 0.065)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
