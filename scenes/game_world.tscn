@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://rx0qnv6sa2i"]
+
+[ext_resource type="PackedScene" uid="uid://b53mvnssrkdev" path="res://scenes/level_one.tscn" id="1_2b3dd"]
+[ext_resource type="Script" path="res://scenes/game_world.gd" id="1_sydqo"]
+[ext_resource type="FontFile" uid="uid://bidxbkni4uqjt" path="res://fonts/Aldrich-Regular.ttf" id="2_7i2hf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ccrgc"]
+font = ExtResource("2_7i2hf")
+font_size = 64
+
+[node name="GameWorld" type="Node"]
+process_mode = 3
+script = ExtResource("1_sydqo")
+
+[node name="Level" type="Node2D" parent="."]
+visible = false
+
+[node name="LevelOne" parent="Level" instance=ExtResource("1_2b3dd")]
+
+[node name="LoadingScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="LoadingScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="LoadingScreen/PanelContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="LoadingScreen/PanelContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="LoadingScreen/PanelContainer/Panel/CenterContainer"]
+layout_mode = 2
+text = "LOADING..."
+label_settings = SubResource("LabelSettings_ccrgc")

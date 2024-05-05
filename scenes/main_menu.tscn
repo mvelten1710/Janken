@@ -1,0 +1,99 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4uxmahc7iatv"]
+
+[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_01nq5"]
+[ext_resource type="FontFile" uid="uid://bidxbkni4uqjt" path="res://fonts/Aldrich-Regular.ttf" id="2_ljs4k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wje06"]
+font = ExtResource("2_ljs4k")
+font_size = 128
+font_color = Color(0, 0, 0, 1)
+outline_size = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i311n"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_01nq5")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/Panel/VBoxContainer"]
+layout_mode = 2
+text = "JANKEN"
+label_settings = SubResource("LabelSettings_wje06")
+horizontal_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Panel/VBoxContainer/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/Panel/VBoxContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="SingleplayerButton" type="Button" parent="PanelContainer/Panel/VBoxContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_ljs4k")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i311n")
+text = "Singleplayer"
+flat = true
+
+[node name="MultiplayerButton" type="Button" parent="PanelContainer/Panel/VBoxContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_ljs4k")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i311n")
+disabled = true
+text = "Multiplayer"
+flat = true
+
+[node name="SettingsButton" type="Button" parent="PanelContainer/Panel/VBoxContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_ljs4k")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i311n")
+text = "Settings"
+flat = true
+
+[node name="ExitButton" type="Button" parent="PanelContainer/Panel/VBoxContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("2_ljs4k")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i311n")
+text = "Exit Game"
+flat = true
+
+[connection signal="pressed" from="PanelContainer/Panel/VBoxContainer/CenterContainer/VBoxContainer/SingleplayerButton" to="." method="_on_singleplayer_button_pressed"]
